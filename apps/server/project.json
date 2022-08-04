@@ -1,0 +1,93 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/server/src",
+  "targets": {
+    "build-server": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/server",
+        "main": "apps/server/src/index.ts",
+        "tsConfig": "apps/server/tsconfig.app.json",
+        "assets": ["apps/server/src/favicon.ico", "apps/server/src/assets"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/server/src/environments/environment.ts",
+              "with": "apps/server/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cp -r dist/apps/client dist/apps/server/assets"
+      },
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        },
+        {
+          "projects": "self",
+          "target": "build-server"
+        }
+      ]
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [{ "command": "yarn electron ./dist/apps/server/main" }]
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/server/**/*.ts", "apps/server/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/server"],
+      "options": {
+        "jestConfig": "apps/server/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["client"]
+}

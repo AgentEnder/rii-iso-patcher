@@ -1,0 +1,17 @@
+.file-input {
+    border: dashed darkcyan 2px;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    input {
+        display: none;
+    }
+
+    &.active {
+        background-color: blue;
+    }
+}
