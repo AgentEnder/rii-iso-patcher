@@ -1,8 +1,0 @@
-<div class="file-input" [class.active]="hover">
-  <label class="file-input__label" *ngIf="label">
-    {{ label }}
-    <input type="file" class="file-input__button" #f (change)="selectFile(f.value)"/>
-  </label>
-  <ng-container *ngIf="selectedFile"></ng-container>
-  
-</div>

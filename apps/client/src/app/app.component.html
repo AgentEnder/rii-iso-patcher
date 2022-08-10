@@ -1,2 +1,4 @@
-<rii-iso-patcher-file-input label="ISO"></rii-iso-patcher-file-input>
-<router-outlet></router-outlet>
+<rii-iso-patcher-file-input label="ISO" (fileSelected)="loadIsoFile($event)" [progress]="progress$ | async"></rii-iso-patcher-file-input>
+<!-- <router-outlet></router-outlet> -->
+
+{{progress$ | async}}

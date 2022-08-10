@@ -4,12 +4,17 @@
   "targets": {
     "build-server": {
       "executor": "@nrwl/node:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/server",
         "main": "apps/server/src/index.ts",
         "tsConfig": "apps/server/tsconfig.app.json",
-        "assets": ["apps/server/src/favicon.ico", "apps/server/src/assets"],
+        "assets": [
+          "apps/server/src/favicon.ico",
+          "apps/server/src/assets"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -64,7 +69,11 @@
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [{ "command": "yarn electron ./dist/apps/server/main" }]
+        "commands": [
+          {
+            "command": "yarn electron ./dist/apps/server/main"
+          }
+        ]
       },
       "dependsOn": [
         {
@@ -76,18 +85,27 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/server/**/*.ts", "apps/server/**/*.html"]
+        "lintFilePatterns": [
+          "apps/server/**/*.ts",
+          "apps/server/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/server"],
+      "outputs": [
+        "coverage/apps/server"
+      ],
       "options": {
         "jestConfig": "apps/server/jest.config.ts",
         "passWithNoTests": true
       }
     }
   },
-  "tags": [],
-  "implicitDependencies": ["client"]
+  "tags": [
+    "scope:server"
+  ],
+  "implicitDependencies": [
+    "client"
+  ]
 }

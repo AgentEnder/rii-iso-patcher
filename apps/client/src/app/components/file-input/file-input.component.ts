@@ -15,9 +15,10 @@ import { fromEvent } from 'rxjs';
   selector: 'rii-iso-patcher-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.scss'],
-})
+})  
 export class FileInputComponent {
   @Input() label?: string;
+  @Input() progress?: number | null;
   @Output() fileSelected = new EventEmitter<string>();
 
   @ViewChild('f') fileInput?: ElementRef<HTMLElement>;
@@ -41,7 +42,7 @@ export class FileInputComponent {
     this.selectFile('');
   }
 
-  @HostListener('click', ['$event']) click(e: Event) {
+  @HostListener('click', ['$event']) click() {
     this.fileInput?.nativeElement.click();
   }
 

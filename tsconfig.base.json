@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@rii-iso-patcher/client/data-access": [
+        "libs/client/data-access/src/index.ts"
+      ],
+      "@rii-iso-patcher/shared/action-types": [
+        "libs/shared/action-types/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

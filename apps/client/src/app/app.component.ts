@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import {
+  getRiivolutionPatchLoadProgress,
+  loadRiivolutionPatch,
+} from '@rii-iso-patcher/client/data-access';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'rii-iso-patcher-root',
@@ -7,4 +13,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
+
+  progress$ = this.store.select(getRiivolutionPatchLoadProgress).pipe(tap((p => {
+    console.log(p);
+    // this.changeDetectorRef.detectChanges();
+  })));
+
+  constructor(private store: Store, private changeDetectorRef: ChangeDetectorRef) {}
+
+  loadIsoFile(file: string) {
+    this.store.dispatch(loadRiivolutionPatch({ filePath: file }));
+  }
 }

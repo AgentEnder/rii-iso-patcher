@@ -15,6 +15,21 @@
               {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"]
+              },
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "bannedExternalImports": ["@angular/*", "@ngrx/*", "@nrwl/*"]
+              },
+              {
+                "sourceTag": "scope:client",
+                "onlyDependOnLibsWithTags": ["scope:client", "scope:shared"],
+                "bannedExternalImports": []
+              },
+              {
+                "sourceTag": "scope:server",
+                "onlyDependOnLibsWithTags": ["scope:server", "scope:shared"],
+                "bannedExternalImports": ["@angular/*", "@ngrx/*", "@nrwl/*"]
               }
             ]
           }

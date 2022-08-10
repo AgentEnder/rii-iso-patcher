@@ -1,0 +1,29 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/client/data-access/src",
+  "prefix": "rii-iso-patcher",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/client/data-access"
+      ],
+      "options": {
+        "jestConfig": "libs/client/data-access/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/client/data-access/**/*.ts",
+          "libs/client/data-access/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "scope:client"
+  ]
+}
