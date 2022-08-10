@@ -5,7 +5,7 @@
       type="file"
       class="file-input__button"
       #f
-      (change)="selectFile(f.value)"
+      (change)="selectFile(f?.files?.[0]?.path)"
     />
   </label>
   <ng-container *ngIf="selectedFile">

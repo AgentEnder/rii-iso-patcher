@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   IpcMessageBody,
@@ -17,7 +17,7 @@ export class ElectronCommunicationsService {
 
   ipcEvents$ = EMPTY;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private ngZone: NgZone) {
     if (window['require']) {
       this.ipcRenderer = window['require']('electron').ipcRenderer;
     } else {
@@ -25,16 +25,18 @@ export class ElectronCommunicationsService {
     }
     this.ipcRenderer.on(IPC_MESSAGE, (e, action: IpcMessageBody) => {
       console.log('CLIENT', action);
-      switch (action.type) {
-        case LOAD_RIIVOLUTION_MOD_PROGRESS:
-          this.store.dispatch(
-            setLoadRiivolutionPatchProgress(
-              (action as IpcMessageBody<LoadRiivolutionModProgressPayload>)
-                .payload
-            )
-          );
-          break;
-      }
+      this.ngZone.run(() => {
+        switch (action.type) {
+            case LOAD_RIIVOLUTION_MOD_PROGRESS:
+              this.store.dispatch(
+                setLoadRiivolutionPatchProgress(
+                  (action as IpcMessageBody<LoadRiivolutionModProgressPayload>)
+                    .payload
+                )
+              );
+              break;
+          }
+      })
     });
   }
 

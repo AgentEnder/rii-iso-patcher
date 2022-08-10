@@ -4,12 +4,10 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
   Output,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'rii-iso-patcher-file-input',
@@ -19,7 +17,7 @@ import { fromEvent } from 'rxjs';
 export class FileInputComponent {
   @Input() label?: string;
   @Input() progress?: number | null;
-  @Output() fileSelected = new EventEmitter<string>();
+  @Output() fileSelected = new EventEmitter<string | undefined>();
 
   @ViewChild('f') fileInput?: ElementRef<HTMLElement>;
 
@@ -39,15 +37,17 @@ export class FileInputComponent {
     console.log(e);
     e.stopPropagation();
     e.preventDefault();
-    this.selectFile('');
+    if (e.dataTransfer?.files[0].path) {
+      this.selectFile(e.dataTransfer?.files[0].path);
+    }
   }
 
   @HostListener('click', ['$event']) click() {
     this.fileInput?.nativeElement.click();
   }
 
-  selectFile(f: string) {
-    this.fileSelected.next(f);
-    this.selectedFile = f;
+  selectFile(path?: string) {
+    this.fileSelected.next(path);
+    this.selectedFile = path;
   }
 }
